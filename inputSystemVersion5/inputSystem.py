@@ -1,0 +1,157 @@
+import pygame
+import math
+
+# setup display
+pygame.init()
+
+clock = pygame.time.Clock()
+FPS = 60
+running = True
+
+# Get screen dimensions
+screen_info = pygame.display.Info()
+screen_width = screen_info.current_w
+screen_height = screen_info.current_h
+screen = pygame.display.set_mode((screen_width-10, screen_height-50),pygame.RESIZABLE)
+
+#Game Variables
+BLACK = (0,0,0)
+GAP = 20
+square_size = 30
+
+#load in images
+home_icon = pygame.image.load("assets/homepage-icon.png")
+
+#font
+LETTER_FONT = pygame.font.Font("assets/font.otf",40)
+WORD_FONT = pygame.font.Font("assets/font.otf",90)
+#def get_font(scale, SCREEN_HEIGHT):  
+#    size = max(12, int(SCREEN_HEIGHT * scale))
+#    return pygame.font.Font("assets/font.ttf", size)
+
+#button var's
+RAD = 32
+GAP = 20
+A = 65   #every charc on keyboard is defined by a unique number and capital A is '65'
+
+
+
+#word bank
+word = "DEVELOPER"
+guessed = []   #represent what letters user has already guessed
+mode = "Freeplay"
+
+#classes
+class Alphabet_Grid:
+    def __init__(self, screen,font_letter,font_word,startx,starty):
+        self.screen = screen
+        self.font_letter = font_letter
+        self.font_word = font_word
+        self.home_btn = pygame.transform.scale(home_icon,(45,45))
+        self.startx = startx
+        self.starty = starty
+        self.letters = [] #letters stores the x_pos , y_pos, "the letter" , and boolean value 
+        self.create_letters_list()
+
+        self.score = 0
+        self.score_increment = 5
+
+
+        
+        #letters = [] #where all btns are stored, will store the xPos, yPos and letter
+
+    def draw_game_info(self):
+        #draw info such as the score, the lives, home btn etc.
+
+        #draw home icon
+        self.screen.blit(self.home_btn,(screen_width-(screen_width*7/8)-70,screen_height-(screen_height-50)))
+
+        #draw score info
+        score_text = self.font_letter.render(f"Score: {self.score}",1,BLACK)
+        self.screen.blit(score_text,(screen_width-(screen_width*2/8),screen_height-(screen_height-50)))
+
+        #draw game mode
+        if mode == "Freeplay":
+            mode_text = self.font_letter.render("FREEPLAY MODE",1,BLACK)
+            self.screen.blit(mode_text,(screen_width-(screen_width*7/8),screen_height-(screen_height-50)))
+
+    def create_letters_list(self):
+        for i in range(26):
+            #determine x pos and y pos of each btn with complex math
+            # implementing gap btw left and right of screen in the calculation             distance between each 2 btns                                                simulates having 2 rows
+            x_pos = self.startx + GAP * 2 + ((RAD * 2 + GAP) * (i % 9))
+            y_pos = self.starty + ((i//9)*(GAP + RAD * 2))
+
+            #pairs of x,y values and letter being represented , all this info is added to the letters list made in class initialiser
+            #getting every charcater represnetation number thru 'char(A+i) below as well
+
+            #the boolean value stores whether the btn has been clciked b4 so we can cross out a letter based on whether ot not it's in the word
+            # the boolean starts as true to say that "the letter does exist in the word so that when the game starts it exists ,but if it's clicked and the letter doesn't exist in the word, it will change to false"
+            self.letters.append([x_pos,y_pos,chr(A+i),True]) 
+
+    def draw_letters(self):
+    #draw word
+        display_word = ""
+        for letter in word:   #looping thru every letter of the actual word
+            #check if we have guessed the letter yet
+            if letter in guessed:
+                display_word += letter + " "
+            else:
+                display_word += "_ "
+        text_entered = self.font_word.render(display_word,1,BLACK)
+        
+        self.screen.blit(text_entered,((screen_width/2)-(text_entered.get_width()/2),(screen_height//2)-(screen_height*1/8)))
+
+            
+
+    #draw btns / letters
+        for x, y, ltr, visible in self.letters:
+            #splitting letter coord into 2 var's
+            #x,y, ltr,visible = letter  
+            if visible:  #by default all btns are visible
+                pygame.draw.circle(self.screen,BLACK,(x,y), RAD, 3)
+                text = self.font_letter.render(ltr, 1,BLACK)
+                #displaying letters
+                self.screen.blit(text, (x-text.get_width()/2,y-text.get_height()/2))
+
+    def hande_clicks(self,pos):
+        m_x, m_y = pos
+        for letter in self.letters:
+            x,y,ltr,visible = letter
+            if visible and math.hypot(x-m_x,y-m_y) < RAD:
+                letter [3] = False
+                guessed.append(ltr)   #adds correctly guessed letter to scren
+                if ltr in word:
+                    self.score += self.score_increment
+                else:
+                    self.score -= self.score_increment
+
+        
+#get starting position of where the circles/btns will be drawn
+startx = round((screen_width - (RAD*2 + GAP)*9)/2)   
+starty = screen_height - (screen_height*2/5)
+grid = Alphabet_Grid(screen,LETTER_FONT,WORD_FONT,startx,starty)
+
+# GAME LOOP
+running = True
+while running:
+    screen.fill("white")
+
+    #EVENT HANDLING
+    # pygame.QUIT event means the user clicked X to close your window
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            grid.hande_clicks(pygame.mouse.get_pos())
+    
+
+    # RENDER YOUR GAME HERE
+    grid.draw_letters()
+    grid.draw_game_info()
+
+    pygame.display.update()
+
+    clock.tick(FPS)  #setting frame rate
+
+pygame.quit()
