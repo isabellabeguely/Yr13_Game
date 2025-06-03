@@ -22,11 +22,11 @@ square_size = 30
 mode = "Freeplay"
 
 #load in images
-home_icon = pygame.image.load("assets/homepage-icon.png")
+home_icon = pygame.image.load("homepage-icon.png")
 
 #font
-LETTER_FONT = pygame.font.Font("assets/font.otf",40)
-WORD_FONT = pygame.font.Font("assets/font.otf",90)
+LETTER_FONT = pygame.font.Font("font.otf",40)
+WORD_FONT = pygame.font.Font("font.otf",90)
 #def get_font(scale, SCREEN_HEIGHT):  
 #    size = max(12, int(SCREEN_HEIGHT * scale))
 #    return pygame.font.Font("assets/font.ttf", size)
@@ -49,7 +49,7 @@ def load_words_from_file(filename):
                 word_asked = parts[1].strip()  #removes spaces in the 2nd part so ["1", "developer"] takes developer part
                 words.append(word_asked)  #adds the word to the list
     return words  #return a list of all the words
-load_words_from_file("assets/word_bank.txt")
+load_words_from_file("word_bank.txt")
 
 
 current_word_index = 0
