@@ -28,22 +28,7 @@ def get_font(scale, screen_height):
 
     return pygame.font.Font("font.otf", size)# Create and return a font object from specified font file
 
-# --------------------- Freeplay Mode Screen ---------------------
-def freeplay():
-    # Initialize global variables for screen and dimensions
-    global SCREEN, running
-    while True:
-        running = True
-        SCREEN.fill("white")  # Fill background
-        # Event loop
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()  # Exit app
-                sys.exit()
-            if event.type == pygame.VIDEORESIZE:
-                SCREEN = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-
-            pygame.display.update()  # Refresh screen
+# The Freeplay Mode Screen function used to sit here, but after the changes made, it wasn't necessary anymore
 
 # --------------------- Time Limit Mode Screen ---------------------
 def timelimit():
