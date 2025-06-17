@@ -214,6 +214,7 @@ while running:
             grid.hande_clicks(pygame.mouse.get_pos())
         if event.type ==  pygame.USEREVENT: 
             counter -= 1
+            #the below text shows when the time runs out
             text = str(counter) if counter > 0 else 'GAME OVER'
     
 
