@@ -2,7 +2,7 @@ import pygame, sys
 import math
 
 # setup display
-pygame.init()
+pygame.init() 
 
 clock = pygame.time.Clock()
 FPS = 60
