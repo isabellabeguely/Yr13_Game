@@ -87,7 +87,7 @@ class freeplay_rungame:
         self.word = word 
         self.guessed = []
         self.lives = 5
-        #self.current_word_index = 0
+        self.current_word_index = 0
         #letters = [] #where all btns are stored, will store the xPos, yPos and letter
 
     def draw_game_info(self):
@@ -178,10 +178,10 @@ class freeplay_rungame:
                     
                     #below checking if each letter is in guessed list
                     if all (ltr in self.guessed for ltr in self.word):
-                        current_word_index+=1
+                        self.current_word_index+=1
                         
-                        if current_word_index < len(words):
-                            self.word = words[current_word_index]
+                        if self.current_word_index < len(words):
+                            self.word = words[self.current_word_index]
                             self.guessed = [] #reset gessed letters
                             for l in self.letters:
                                 l[3] = True
@@ -281,7 +281,7 @@ def freeplay_mode(screen, screen_width, screen_height,back_to_menu=None):
     
     startx = round((screen_width - (RAD*2 + GAP)*9)/2)   
     starty = screen_height - (screen_height*2/5)
-    current_word_index = 0
+
 
     #get starting position of where the circles/btns will be drawn
     
