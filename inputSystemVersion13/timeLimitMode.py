@@ -12,7 +12,7 @@ running= True
 
 
 countdown_clock = pygame.time.Clock()
-counter, text = 10, '10'
+counter, text = 100, '100'
 #counter, text = 30, '30'
 pygame.time.set_timer(pygame.USEREVENT, 1000)
 
@@ -92,7 +92,7 @@ class TimeLimitMode:
         self.score_increment = 5
         self.word = word 
         self.guessed = []
-        #self.current_word_index = 0
+        self.current_word_index = 0
         #letters = [] #where all btns are stored, will store the xPos, yPos and letter
 
     def draw_game_info(self,text):
@@ -183,10 +183,10 @@ class TimeLimitMode:
                     
                     #below checking if each letter is in guessed list
                     if all (ltr in self.guessed for ltr in self.word):
-                        current_word_index+=1
+                        self.current_word_index+=1
                         
-                        if current_word_index < len(words):
-                            self.word = words[current_word_index]
+                        if self.current_word_index < len(words):
+                            self.word = words[self.current_word_index]
                             self.guessed = [] #reset gessed letters
                             for l in self.letters:
                                 l[3] = True
@@ -271,15 +271,15 @@ def draw_game_over_screen(screen, font):
 # ------------------  ✅  Add timelimit_rungame------------------     
 def timelimit_rungame(screen, screen_width, screen_height,back_to_menu=None):
     load_words_from_file("word_bank.txt")
-    current_word_index = 0
+    #current_word_index = 0
     word = words[0] 
-    counter = 10 
+    counter = 100
     text = str(counter)
     #screen = pygame.display.set_mode((screen_width - 10, screen_height - 50), pygame.RESIZABLE)
 
     startx = round((screen_width - (RAD * 2 + GAP) * 9) / 2)
     starty = screen_height - (screen_height * 2 / 5)
-    current_word_index = 0
+    
     
 
     grid = TimeLimitMode(screen, LETTER_FONT, WORD_FONT, startx, starty, word)
