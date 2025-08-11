@@ -1,3 +1,4 @@
+
 import pygame, sys, os
 import math
 import random
@@ -120,9 +121,9 @@ class TimeLimitMode:
         self.screen.blit(score_text,(screen_width-(screen_width*2/8),screen_height-(screen_height-50)))
 
         #draw bulb icon which is for hints and the number of hints
-        self.screen.blit(self.bulb_btn,(screen_width-(screen_width*5/16),screen_height//2-(screen_height*1/8)))
+        self.screen.blit(self.bulb_btn,(screen_width*1/12,screen_height//2-(screen_height*1/8)))
         hints_text = self.font_letter.render(str(self.number_of_hints),1,BLACK)
-        self.screen.blit(hints_text,(screen_width-(screen_width*5/16)+55,screen_height//2-(screen_height*1/8)))
+        self.screen.blit(hints_text,(screen_width*1/12+55,screen_height//2-(screen_height*1/8)))
 
         #draw game mode
         if mode == "Timelimit":
@@ -280,7 +281,7 @@ class TimeLimitMode:
         return self.home_btn.get_rect(topleft=(screen_width-(screen_width*7/8)-70, screen_height-(screen_height-50)))
     
     def get_bulb_rect(self):
-        return self.bulb_btn.get_rect(topleft=(screen_width-(screen_width*5/16),screen_height//2-(screen_height*1/8)))
+        return self.bulb_btn.get_rect(topleft=(screen_width*1/12,screen_height//2-(screen_height*1/8)))
 
 
 # Function to draw the game over screen
@@ -356,7 +357,7 @@ def show_rules(screen):
     # load the rules image
     rules_image = pygame.image.load(resource_path("assets/rules.png"))
     # scale the image to fit the screen
-    rules_image = pygame.transform.scale(rules_image, (screen_width, screen_height))
+    rules_image = pygame.transform.scale(rules_image, ((screen_width, screen_height-(screen_height*1/12))))
     #   blit the image onto the overlay
     overlay.blit(rules_image, (0, 0))
     # draw the overlay on the screen
