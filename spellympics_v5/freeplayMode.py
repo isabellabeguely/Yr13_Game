@@ -120,9 +120,11 @@ class freeplay_rungame:
         self.screen.blit(score_text,(screen_width-(screen_width*2/8),screen_height-(screen_height-50)))
 
          #draw bulb icon which is for hints and the number of hints
-        self.screen.blit(self.bulb_btn,(screen_width-(screen_width*5/16),screen_height//2-(screen_height*1/8)))
+        
+        self.screen.blit(self.bulb_btn,(screen_width*1/12,screen_height//2-(screen_height*1/8)))
         hints_text = self.font_letter.render(str(self.number_of_hints),1,BLACK)
-        self.screen.blit(hints_text,(screen_width-(screen_width*5/16)+55,screen_height//2-(screen_height*1/8)))
+        self.screen.blit(hints_text,((screen_width*1/12)+55,screen_height//2-(screen_height*1/8)))
+        #self.screen.blit(hints_text,(screen_width-(screen_width*5/16)+55,screen_height//2-(screen_height*1/8)))
 
 
         #draw lives / heart system
@@ -279,7 +281,8 @@ class freeplay_rungame:
     def get_home_rect(self):
         return self.home_btn.get_rect(topleft=(screen_width-(screen_width*7/8)-70, screen_height-(screen_height-50)))
     def get_bulb_rect(self):
-        return self.bulb_btn.get_rect(topleft=(screen_width-(screen_width*5/16),screen_height//2-(screen_height*1/8)))
+        return self.bulb_btn.get_rect(topleft=(screen_width*1/12,screen_height//2-(screen_height*1/8)))
+        #return self.bulb_btn.get_rect(topleft=(screen_width-(screen_width*5/16),screen_height//2-(screen_height*1/8)))
 
 # Function to draw the game over screen
 def draw_game_over_screen(screen, font,reason="died"):
@@ -441,6 +444,9 @@ def freeplay_mode(screen, screen_width, screen_height,back_to_menu=None):
                 if event.unicode.isalpha(): #checks if the keydown is an alphabet letter
                     typed_letter = event.unicode.upper()
                     grid.handle_keyboard_input(typed_letter)
+                elif event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
                     
            
         # Draw the game elements
