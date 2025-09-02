@@ -71,7 +71,7 @@ def load_words_from_file(filename):
                 words.append(word_asked)  #adds the word to the list
 
     random.shuffle(words)
-    return words  #return a list of all the words
+    return words  #return a list of all the words after they are re-ordered
 
 
 #classes
@@ -280,7 +280,7 @@ class freeplay_rungame:
                 display_word += "_ "
         text_entered = self.font_word.render(display_word,1,BLACK)
         self.screen.blit(text_entered,((screen_width/2)-(text_entered.get_width()/2),(screen_height//2)-(screen_height*1/8)))
-
+   #get rectangles of the images to help with collision detection
     def get_help_rect(self):
         return self.help_rect
 
@@ -420,7 +420,7 @@ def freeplay_mode(screen, screen_width, screen_height,back_to_menu=None):
 
                 elif showing_rules:
                     showing_rules = False
-                
+                #light bulb mechanic where the number of hints decreases on collision / when the user uses a hint
                 elif grid.get_bulb_rect().collidepoint(mouse_pos):
                     #print("CLICK")
                     if grid.number_of_hints > 0:
