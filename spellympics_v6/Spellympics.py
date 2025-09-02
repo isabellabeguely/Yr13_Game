@@ -6,7 +6,6 @@ from timeLimitMode import timelimit_rungame
 pygame.init()  # Initialize all Pygame modules
 
 def resource_path(relative_path):
-    
     try:
         base_path = sys._MEIPASS  # Temporary path after packing
     except AttributeError:
@@ -14,7 +13,7 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
     try:
-        base_path = sys._MEIPASS  # PyInstaller临时路径
+        base_path = sys._MEIPASS  # PyInstaller temporary path
     except AttributeError:
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
@@ -24,9 +23,9 @@ def resource_path(relative_path):
 screen_info = pygame.display.Info()
 SCREEN_WIDTH = screen_info.current_w
 SCREEN_HEIGHT = screen_info.current_h
+
 # Create a resizable window and setting up window
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT),pygame.RESIZABLE)
-
 
 pygame.display.set_caption("Menu")  # Set window title
 
