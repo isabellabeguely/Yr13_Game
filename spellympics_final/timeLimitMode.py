@@ -402,7 +402,7 @@ def show_rules(screen):
     screen.blit(overlay, (0, 0))
 
 
-# ------------------  ✅  Add timelimit_rungame------------------     
+# ------------------  Add timelimit_rungame------------------     
 def timelimit_rungame(screen, screen_width, screen_height,back_to_menu=None):
     load_words_from_file(resource_path("assets/word_bank.txt"))
     #current_word_index = 0
@@ -432,18 +432,18 @@ def timelimit_rungame(screen, screen_width, screen_height,back_to_menu=None):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN: #  ✅  Handle mouse clicks
+            elif event.type == pygame.MOUSEBUTTONDOWN: #Handle mouse clicks
                 mouse_pos = pygame.mouse.get_pos()
                 if showing_rules:
                     showing_rules = False
                      # check if rules are being shown and hide them
                 if game_over: # Game over screen is active
-                    if back_button_rect.collidepoint(mouse_pos): #  ✅  Check if back button is clicked
+                    if back_button_rect.collidepoint(mouse_pos): # Check if back button is clicked
                         running = False
-                        if back_to_menu: #  ✅  Call back_to_menu if provided
+                        if back_to_menu: #Call back_to_menu if provided
                             back_to_menu()
                         return
-                elif not showing_rules and grid.get_help_rect().collidepoint(mouse_pos): #  ✅  Check if help button is clicked 
+                elif not showing_rules and grid.get_help_rect().collidepoint(mouse_pos): # Check if help button is clicked 
                     showing_rules = True
 
                 elif showing_rules:
@@ -465,21 +465,21 @@ def timelimit_rungame(screen, screen_width, screen_height,back_to_menu=None):
                                     grid.word_display_start_time = None
                 else:
         # Game in progress, processing letter clicks
-                    if grid.get_home_rect().collidepoint(mouse_pos): #  ✅  Check if home button is clicked
+                    if grid.get_home_rect().collidepoint(mouse_pos): #Check if home button is clicked
                             running = False
                             if back_to_menu:
                                 back_to_menu()
                             return
-                    grid.hande_clicks(mouse_pos)  # ✅  Correctly handle letter clicks
+                    grid.hande_clicks(mouse_pos)  #Correctly handle letter clicks
 
-            elif event.type == pygame.USEREVENT: #  ✅  Timer event for countdown
+            elif event.type == pygame.USEREVENT: #Timer event for countdown
                 if not game_over:
                     counter -= 1
                     text = str(counter) if counter > 0 else 'GAME OVER'
                 
                 if counter <= 0:
-                    game_over = True #  ✅  Set game_over to True when time runs out
-                    game_over_reason = "timeout" #  ✅  Set reason for game over
+                    game_over = True #Set game_over to True when time runs out
+                    game_over_reason = "timeout" #Set reason for game over
                 
 
             elif event.type == pygame.KEYDOWN:
@@ -491,12 +491,12 @@ def timelimit_rungame(screen, screen_width, screen_height,back_to_menu=None):
                         sys.exit()
 
         
-        if grid.finished_all_words: #  ✅  Check if all words have been guessed
+        if grid.finished_all_words: #Check if all words have been guessed
             game_over = True
             game_over_reason = "completed"
             text = 'GAME OVER'
         if game_over:
-            back_button_rect = draw_game_over_screen(screen, GAMEOVER_FONT,game_over_reason) #  ✅  Draw game over screen and get back button rect
+            back_button_rect = draw_game_over_screen(screen, GAMEOVER_FONT,game_over_reason) #Draw game over screen and get back button rect
         elif showing_rules:  
             show_rules(screen)
         else:
